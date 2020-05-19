@@ -97,6 +97,9 @@ function format(query)
 		if(inPhrase)
 		{
 			result=result+query.charAt(idx);
+			if(query.charAt(idx)=='\n')
+			for(let i=0;i<countTabs;i++)
+				result=result+"\t";
 			continue;
 		}
 		if(query.charAt(idx)==' ' || query.charAt(idx)=='\t' || query.charAt(idx)=='\n' || query.charAt(idx)=='\r')
