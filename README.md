@@ -15,7 +15,7 @@ For Mac:  "shift+cmd+i"
 For Non-Mac: "shift+ctrl+i"
 
             OR
-            
+
 For Mac: "shift+cmd+p" -> "Format Query"
 
 For Non-Mac: "shift+ctrl+p" -> "Format Query"
@@ -28,10 +28,10 @@ QUERY MUST NOT CONTAIN ANY VALIDATION PROBLEM.
 
 Original Query: 
 
-![](Screenshots/before.jpg)
+![](images/before.jpg)
 
 Indented Query:
 
-![](Screenshots/after.jpg)
+![](images/after.jpg)
 
 NISHANT SINGH
