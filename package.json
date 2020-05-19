@@ -8,7 +8,11 @@
 		"vscode": "^1.45.0"
 	},
 	"categories": [
-		"Other"
+		"Formatters"
+	],
+	"keywords": [
+		"Lucene","Query","Indent","Format"
+
 	],
 	"activationEvents": [
 		"*"
