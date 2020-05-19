@@ -2,7 +2,7 @@
 	"name": "query-formatter",
 	"displayName": "Query Formatter",
 	"description": "Indent Lucene query object for better readability.",
-	"publisher": "Nishant",
+	"publisher": "nishantns19",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.45.0"
