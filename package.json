@@ -1,7 +1,7 @@
 {
-	"name": "query-formatter",
-	"displayName": "Query Formatter",
-	"description": "Indent Lucene query object for better readability.",
+	"name": "lucene-query-formatter",
+	"displayName": "Lucene Query Formatter",
+	"description": "Indent Lucene query object strings for better readability.",
 	"publisher": "nishantns19",
 	"version": "0.0.1",
 	"engines": {
