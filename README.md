@@ -15,7 +15,7 @@ For Mac:  "shift+cmd+i"
 For Non-Mac: "shift+ctrl+i"
 
             OR
-
+git
 For Mac: "shift+cmd+p" -> "Format Query"
 
 For Non-Mac: "shift+ctrl+p" -> "Format Query"
