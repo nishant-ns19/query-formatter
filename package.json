@@ -3,7 +3,7 @@
 	"displayName": "Lucene Query Formatter",
 	"description": "Indent Lucene query object strings for better readability.",
 	"publisher": "nishantns19",
-	"icon": "/images/icon.jpeg",
+	"icon": "images/icon.png",
 	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.45.0"
