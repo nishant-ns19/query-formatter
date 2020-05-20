@@ -38,166 +38,166 @@ function activate(context)
 						if(result!==textSelection)
 						{
 							editor.edit(builder => builder.replace(selection.isEmpty
-							? new vscode.Range(new vscode.Position(0,0),new vscode.Position(document.lineCount,0)) 
-							:selection,result)).then(success =>{
-								console.log("Indented successfully: "+success);
-								vscode.window.showInformationMessage("Indented successfully !");
-								if(selection.isEmpty)
-								{
-									var postion = editor.selection.end; 
-									editor.selection = new vscode.Selection(postion, postion);
-								}
-							});	
-						}
-						
-					} catch (error) 
-					{
+								? new vscode.Range(new vscode.Position(0,0),new vscode.Position(document.lineCount,0)) 
+								:selection,result)).then(success =>{
+									console.log("Indented successfully: "+success);
+									vscode.window.showInformationMessage("Indented successfully !");
+									if(selection.isEmpty)
+									{
+										var postion = editor.selection.end; 
+										editor.selection = new vscode.Selection(postion, postion);
+									}
+								});	
+							}
+							
+						} catch (error) 
+						{
 							console.log("Error occurred: " + error);
 							vscode.window.showInformationMessage("Unable to process text !");
-					}
+						}
 						
 					}
 				}
-		}
+			}
 			else
 			{
 				vscode.window.showInformationMessage("No editor detected");
 			}
-	});
+		});
 		
-	context.subscriptions.push(disposable);
-}
-exports.activate = activate;
-	
-// this method is called when your extension is deactivated
-function deactivate() {}
-	
-module.exports = {
-	activate,
-	deactivate
-}
-	
-/**
-* @param {string} query
-*/
-function format(query)	
-{
-	query=removeSpace(query)
-	if(query.charAt(0)=='\"' && query.charAt(query.length-1)=='\"' && query.length>=2)
-	{	query=query.substr(1,query.length-2);
+		context.subscriptions.push(disposable);
 	}
-	var result="";
-	var countTabs=0;
-	var inPhrase=false;
-	for (let idx = 0; idx < query.length; idx++)
+	exports.activate = activate;
+	
+	// this method is called when your extension is deactivated
+	function deactivate() {}
+	
+	module.exports = {
+		activate,
+		deactivate
+	}
+	
+	/**
+	* @param {string} query
+	*/
+	function format(query)	
 	{
-		if(query.charAt(idx)=='\"')
+		query=removeSpace(query)
+		if(query.charAt(0)=='\"' && query.charAt(query.length-1)=='\"' && query.length>=2)
+		{	query=query.substr(1,query.length-2);
+		}
+		var result="";
+		var countTabs=0;
+		var inPhrase=false;
+		for (let idx = 0; idx < query.length; idx++)
 		{
-			inPhrase=!inPhrase;
-			result=result+query.charAt(idx);
-			if(!inPhrase)
+			if(query.charAt(idx)=='\"')
 			{
-				result=result+"\n";
-				for(let i=0;i<countTabs;i++)
+				inPhrase=!inPhrase;
+				result=result+query.charAt(idx);
+				if(!inPhrase)
 				{
-					result=result+"\t";
+					result=result+"\n";
+					for(let i=0;i<countTabs;i++)
+					{
+						result=result+"\t";
+					}
 				}
+				continue;
 			}
-			continue;
-		}
-		if(inPhrase)
-		{
-			result=result+query.charAt(idx);
-			if(query.charAt(idx)=='\n')
+			if(inPhrase)
 			{
-				for(let i=0;i<countTabs;i++)
-				{	
-					result=result+"\t";
-				}
-			}
-			continue;
-		}
-		if(query.charAt(idx)==' ' || query.charAt(idx)=='\t' || query.charAt(idx)=='\n' || query.charAt(idx)=='\r')
-		{
-			continue;
-		}
-		if(query.charAt(idx)==',')
-		{
-			if(result.charAt(result.length-1)=='\n')
-			{
-				for(let i=0;i<countTabs;i++)
+				result=result+query.charAt(idx);
+				if(query.charAt(idx)=='\n')
 				{
-					result=result+"\t";
+					for(let i=0;i<countTabs;i++)
+					{	
+						result=result+"\t";
+					}
 				}
+				continue;
 			}
-			result=result+query.charAt(idx);
-			result=result+"\n";
-			for(let i=0;i<countTabs;i++)
-			{
-				result=result+"\t";
-			}
-		}
-		else if(query.charAt(idx)=='(' || query.charAt(idx)=='[' || query.charAt(idx)=='{')
-		{
-			result=result+query.charAt(idx);
-			result=result+"\n";
-			countTabs++;
-			for(let i=0;i<countTabs;i++)
-			{
-				result=result+"\t";
-			}
-		}
-		else if(query.charAt(idx)==')' || query.charAt(idx)==']' || query.charAt(idx)=='}')
-		{
-			if(result.charAt(result.length-1)=='\t')
-			{
-				result=result.substr(0,result.length-1);
-			}
-			else
-			{
-				result=result+"\n";
-				for(let i=0;i<countTabs-1;i++)
-				{
-					result=result+"\t";
-				}
-			}
-			countTabs--;
-			result=result+query.charAt(idx);
-			if((idx<(query.length-1)) && query.charAt(idx+1)==',')
+			if(query.charAt(idx)==' ' || query.charAt(idx)=='\t' || query.charAt(idx)=='\n' || query.charAt(idx)=='\r')
 			{
 				continue;
 			}
-			result=result+"\n";
-			for(let i=0;i<countTabs;i++)
+			if(query.charAt(idx)==',')
 			{
-				result=result+"\t";
+				if(result.charAt(result.length-1)=='\n')
+				{
+					for(let i=0;i<countTabs;i++)
+					{
+						result=result+"\t";
+					}
+				}
+				result=result+query.charAt(idx);
+				result=result+"\n";
+				for(let i=0;i<countTabs;i++)
+				{
+					result=result+"\t";
+				}
+			}
+			else if(query.charAt(idx)=='(' || query.charAt(idx)=='[' || query.charAt(idx)=='{')
+			{
+				result=result+query.charAt(idx);
+				result=result+"\n";
+				countTabs++;
+				for(let i=0;i<countTabs;i++)
+				{
+					result=result+"\t";
+				}
+			}
+			else if(query.charAt(idx)==')' || query.charAt(idx)==']' || query.charAt(idx)=='}')
+			{
+				if(result.charAt(result.length-1)=='\t')
+				{
+					result=result.substr(0,result.length-1);
+				}
+				else
+				{
+					result=result+"\n";
+					for(let i=0;i<countTabs-1;i++)
+					{
+						result=result+"\t";
+					}
+				}
+				countTabs--;
+				result=result+query.charAt(idx);
+				if((idx<(query.length-1)) && query.charAt(idx+1)==',')
+				{
+					continue;
+				}
+				result=result+"\n";
+				for(let i=0;i<countTabs;i++)
+				{
+					result=result+"\t";
+				}
+			}
+			else
+			{
+				result=result+query.charAt(idx);
 			}
 		}
-		else
+		return result;
+	}
+	
+	/**
+	* @param {string} query
+	*/
+	function removeSpace(query)
+	{
+		var l=0,r=query.length-1
+		while(l<query.length && (query[l]==' ' || query[l]=='\r' || query[l]=='\t' || query[l]=='\n'))
 		{
-			result=result+query.charAt(idx);
+			l++;
 		}
+		while(r>=0 && (query[r]==' ' || query[r]=='\r' || query[r]=='\t' || query[r]=='\n'))
+		{
+			r--;
+		}
+		if(l>r)
+		{
+			return "";
+		}
+		return query.substr(l,r-l+1)
 	}
-	return result;
-}
-
-/**
-* @param {string} query
-*/
-function removeSpace(query)
-{
-	var l=0,r=query.length-1
-	while(l<query.length && (query[l]==' ' || query[l]=='\r' || query[l]=='\t' || query[l]=='\n'))
-	{
-		l++;
-	}
-	while(r>=0 && (query[r]==' ' || query[r]=='\r' || query[r]=='\t' || query[r]=='\n'))
-	{
-		r--;
-	}
-	if(l>r)
-	{
-		return "";
-	}
-	return query.substr(l,r-l+1)
-}
