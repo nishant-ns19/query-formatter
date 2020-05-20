@@ -76,6 +76,7 @@ module.exports = {
 */
 function format(query)	
 {
+	query=removeSpace(query)
 	if(query.charAt(0)=='\"' && query.charAt(query.length-1)=='\"' && query.length>=2)
 	query=query.substr(1,query.length-2);
 	var result="";
@@ -150,4 +151,23 @@ function format(query)
 		}
 	}
 	return result;
+}
+
+/**
+* @param {string} query
+*/
+function removeSpace(query)
+{
+	var l=0,r=query.length-1
+	while(l<query.length && (query[l]==' ' || query[l]=='\r' || query[l]=='\t' || query[l]=='\n'))
+	{
+		l++;
+	}
+	while(r>=0 && (query[r]==' ' || query[r]=='\r' || query[r]=='\t' || query[r]=='\n'))
+	{
+		r--;
+	}
+	if(l>r)
+		return "";
+	return query.substr(l,r-l+1)
 }
