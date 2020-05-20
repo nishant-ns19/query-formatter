@@ -8,11 +8,13 @@ const vscode = require('vscode');
 /**
 * @param {vscode.ExtensionContext} context
 */
-function activate(context) {
+function activate(context) 
+{
 	// The command has been defined in the package.json file
 	let disposable = vscode.commands.registerCommand('query-formatter.start', function () {
 		var editor=vscode.window.activeTextEditor;
-		if (editor) {
+		if (editor)
+		{
 			const document = editor.document;
 			if(!document)
 			{
@@ -22,55 +24,59 @@ function activate(context) {
 			{
 				const selection = editor.selection;
 				const textSelection =selection.isEmpty ? document.getText() : document.getText(selection);
-				if(!textSelection){
+				if(!textSelection)
+				{
 					vscode.window.showInformationMessage("Please provide some text");
 				}
-				else{
+				else
+				{
 					console.log("Indenting Lucene Query..." );
 					vscode.window.setStatusBarMessage("Indenting Lucene Query...",1000)
-					try{
+					try
+					{
 						var result=format(textSelection);
 						if(result!==textSelection)
 						{
 							editor.edit(builder => builder.replace(selection.isEmpty
-								? new vscode.Range(new vscode.Position(0,0),new vscode.Position(document.lineCount,0)) 
-								:selection,result)).then(success =>{
-									console.log("Indented successfully: "+success);
-									vscode.window.showInformationMessage("Indented successfully !");
-									if(selection.isEmpty){
-										var postion = editor.selection.end; 
-										editor.selection = new vscode.Selection(postion, postion);
-									}
+							? new vscode.Range(new vscode.Position(0,0),new vscode.Position(document.lineCount,0)) 
+							:selection,result)).then(success =>{
+								console.log("Indented successfully: "+success);
+								vscode.window.showInformationMessage("Indented successfully !");
+								if(selection.isEmpty)
+								{
+									var postion = editor.selection.end; 
+									editor.selection = new vscode.Selection(postion, postion);
+								}
 							});	
 						}
 						
 					} catch (error) 
 					{
-						console.log("Error occurred: " + error);
-						vscode.window.showInformationMessage("Unable to process text !");
+							console.log("Error occurred: " + error);
+							vscode.window.showInformationMessage("Unable to process text !");
 					}
-					
+						
+					}
 				}
+		}
+			else
+			{
+				vscode.window.showInformationMessage("No editor detected");
 			}
-		}
-		else
-		{
-			vscode.window.showInformationMessage("No editor detected");
-		}
 	});
-	
+		
 	context.subscriptions.push(disposable);
 }
 exports.activate = activate;
-
+	
 // this method is called when your extension is deactivated
 function deactivate() {}
-
+	
 module.exports = {
 	activate,
 	deactivate
 }
-
+	
 /**
 * @param {string} query
 */
@@ -78,11 +84,13 @@ function format(query)
 {
 	query=removeSpace(query)
 	if(query.charAt(0)=='\"' && query.charAt(query.length-1)=='\"' && query.length>=2)
-	query=query.substr(1,query.length-2);
+	{	query=query.substr(1,query.length-2);
+	}
 	var result="";
 	var countTabs=0;
 	var inPhrase=false;
-	for (let idx = 0; idx < query.length; idx++) {
+	for (let idx = 0; idx < query.length; idx++)
+	{
 		if(query.charAt(idx)=='\"')
 		{
 			inPhrase=!inPhrase;
@@ -91,7 +99,9 @@ function format(query)
 			{
 				result=result+"\n";
 				for(let i=0;i<countTabs;i++)
-				result=result+"\t";
+				{
+					result=result+"\t";
+				}
 			}
 			continue;
 		}
@@ -99,21 +109,33 @@ function format(query)
 		{
 			result=result+query.charAt(idx);
 			if(query.charAt(idx)=='\n')
-			for(let i=0;i<countTabs;i++)
-				result=result+"\t";
+			{
+				for(let i=0;i<countTabs;i++)
+				{	
+					result=result+"\t";
+				}
+			}
 			continue;
 		}
 		if(query.charAt(idx)==' ' || query.charAt(idx)=='\t' || query.charAt(idx)=='\n' || query.charAt(idx)=='\r')
-		continue;
+		{
+			continue;
+		}
 		if(query.charAt(idx)==',')
 		{
 			if(result.charAt(result.length-1)=='\n')
-			for(let i=0;i<countTabs;i++)
-			result=result+"\t";
+			{
+				for(let i=0;i<countTabs;i++)
+				{
+					result=result+"\t";
+				}
+			}
 			result=result+query.charAt(idx);
 			result=result+"\n";
 			for(let i=0;i<countTabs;i++)
-			result=result+"\t";
+			{
+				result=result+"\t";
+			}
 		}
 		else if(query.charAt(idx)=='(' || query.charAt(idx)=='[' || query.charAt(idx)=='{')
 		{
@@ -121,7 +143,9 @@ function format(query)
 			result=result+"\n";
 			countTabs++;
 			for(let i=0;i<countTabs;i++)
-			result=result+"\t";
+			{
+				result=result+"\t";
+			}
 		}
 		else if(query.charAt(idx)==')' || query.charAt(idx)==']' || query.charAt(idx)=='}')
 		{
@@ -133,7 +157,9 @@ function format(query)
 			{
 				result=result+"\n";
 				for(let i=0;i<countTabs-1;i++)
-				result=result+"\t";
+				{
+					result=result+"\t";
+				}
 			}
 			countTabs--;
 			result=result+query.charAt(idx);
@@ -143,7 +169,9 @@ function format(query)
 			}
 			result=result+"\n";
 			for(let i=0;i<countTabs;i++)
-			result=result+"\t";
+			{
+				result=result+"\t";
+			}
 		}
 		else
 		{
@@ -168,6 +196,8 @@ function removeSpace(query)
 		r--;
 	}
 	if(l>r)
+	{
 		return "";
+	}
 	return query.substr(l,r-l+1)
 }
