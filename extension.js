@@ -47,7 +47,7 @@ function activate(context)
 								:selection,result)).then(success =>{
 								console.log("Indented successfully: "+success);
 								vscode.window.showInformationMessage("Indented successfully !");
-								//If nothing was selected by the user,deselect everything my moving cursor to the end after replacing th text
+								//If nothing was selected by the user,deselect everything my moving cursor to the end after replacing the text
 								if(selection.isEmpty)
 								{
 									var postion = editor.selection.end; 
