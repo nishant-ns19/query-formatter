@@ -94,17 +94,17 @@ function format(query)
 	}
 	var result="";
 	var tabCount=0;
-	//inPhrase signifies if we are traversing the quoted text
+	//inPhrase indicates whether we are traversing the quoted text
 	var inPhrase=false;
 	for (let idx = 0; idx < query.length; idx++)
 	{
-		//toggle inPhrase when " is encountered
+		//toggle inPhrase when ' " ' is encountered
 		if(query.charAt(idx)=='\"')
 		{
 			//toggle inPhrase
 			inPhrase=!inPhrase;
 			result=result+query.charAt(idx);
-			//Jump onto new line after completing each phrase(quoted text)
+			//Jump onto the next line after completing each phrase(quoted text)
 			if(!inPhrase)
 			{
 				result=result+"\n";
@@ -116,7 +116,7 @@ function format(query)
 		if(inPhrase)
 		{
 			result=result+query.charAt(idx);
-			//in case quoted text contains newline character, cursor should move onto next block but should not change the current block
+			//in case quoted text contains newline character, cursor should move onto the next line but should not change the current block
 			if(query.charAt(idx)=='\n')
 			{
 				result=result+"\t".repeat(tabCount);
@@ -128,7 +128,7 @@ function format(query)
 		{
 			continue;
 		}
-		//Handling ',' separately
+		//Handle ',' separately
 		if(query.charAt(idx)==',')
 		{
 			//Incase cursor is at the starting of a new line, add tab spacing to get into the current block
