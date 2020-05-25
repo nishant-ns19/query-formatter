@@ -34,7 +34,7 @@ function activate(context) {
               1000
             );
             try {
-              //format the query
+              //format query
               var result = format(textSelection);
               if (result !== textSelection) {
                 //use editor object to replace the text
