@@ -104,9 +104,8 @@ function format(query) {
   //inPhrase indicates whether we are traversing the quoted text
   var inPhrase = false;
   for (let idx = 0; idx < query.length; idx++) {
-    //toggle inPhrase when ' " ' is encountered
     if (query.charAt(idx) == '"') {
-      //toggle inPhrase
+      //toggle inPhrase when ' " ' is encountered
       inPhrase = !inPhrase;
       result = result + query.charAt(idx);
       //jump onto the next line after completing each phrase(quoted text)
