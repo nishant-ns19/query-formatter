@@ -173,7 +173,7 @@ function format(query) {
         result = result + "\n";
         result = result + "\t".repeat(tabCount - 1);
       }
-      // decrement tabCount due to closing of the block
+      //decrement tabCount due to closing of the block
       tabCount--;
       result = result + query.charAt(idx);
       //incase there is a ',' after closing a block, it has to be printed just after closing so continue without moving onto the next line
@@ -184,7 +184,7 @@ function format(query) {
       result = result + "\n";
       result = result + "\t".repeat(tabCount);
     }
-    //in any other case, just print the character
+    //in any other cases, just print the character
     else {
       result = result + query.charAt(idx);
     }
