@@ -16,13 +16,11 @@ For Non-Mac: "shift+ctrl+i"
 
             OR
 
-For Mac: "shift+cmd+p" -> "Format Query"
-
-For Non-Mac: "shift+ctrl+p" -> "Format Query"
+Open Command Palette , choose "Format Query"
 
 
 ## Requirements
-QUERY MUST NOT CONTAIN ANY VALIDATION PROBLEM.
+QUERY MUST NOT CONTAIN ANY VALIDATION ERROR.
 
 ## EXAMPLE
 
