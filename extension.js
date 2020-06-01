@@ -1,35 +1,33 @@
 // The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-const vscode = require("vscode");
-
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+const {window,commands,Range,Position,Selection} =require('vscode')
+const vscode=require('vscode')
+// this method is called when extension is activated
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
   // the command has been defined in the package.json file
-  let disposable = vscode.commands.registerCommand(
+  let disposable = commands.registerCommand(
     "query-formatter.start",
     function () {
-      var editor = vscode.window.activeTextEditor;
+      var editor = window.activeTextEditor;
       if (editor) {
         //retrieve current document
         const document = editor.document;
         if (!document) {
-          vscode.window.showInformationMessage("No document detected");
+          window.showInformationMessage("No document detected");
         } else {
           const selection = editor.selection;
           //retrieve selected text and if nothing is selected, everything is retrieved
           const textSelection = selection.isEmpty
-            ? document.getText()
-            : document.getText(selection);
+            ? document.getText().trim()
+            : document.getText(selection).trim();
           if (!textSelection) {
-            vscode.window.showInformationMessage("Please provide some text");
+            window.showInformationMessage("Please provide some text");
           } else {
             console.log("Indenting Lucene Query...");
-            vscode.window.setStatusBarMessage(
+            window.setStatusBarMessage(
               "Indenting Lucene Query...",
               1000
             );
@@ -42,9 +40,9 @@ function activate(context) {
                   .edit((builder) =>
                     builder.replace(
                       selection.isEmpty
-                        ? new vscode.Range(
-                            new vscode.Position(0, 0),
-                            new vscode.Position(document.lineCount, 0)
+                        ? new Range(
+                            new Position(0, 0),
+                            new Position(document.lineCount, 0)
                           )
                         : selection,
                       result
@@ -52,24 +50,27 @@ function activate(context) {
                   )
                   .then((success) => {
                     console.log("Indented successfully: " + success);
-                    vscode.window.showInformationMessage(
+                    window.showInformationMessage(
                       "Indented successfully !"
                     );
                     //if nothing was selected by the user,deselect everything by moving cursor to the end after replacing the text
                     if (selection.isEmpty) {
                       var position = editor.selection.end;
-                      editor.selection = new vscode.Selection(position, position);
+                      editor.selection = new Selection(
+                        position,
+                        position
+                      );
                     }
                   });
               }
             } catch (error) {
               console.log("Error occurred: " + error);
-              vscode.window.showInformationMessage("Unable to process text !");
+              window.showInformationMessage("Unable to process text !");
             }
           }
         }
       } else {
-        vscode.window.showInformationMessage("No editor detected");
+        window.showInformationMessage("No editor detected");
       }
     }
   );
@@ -89,21 +90,23 @@ module.exports = {
  * @param {string} query
  */
 function format(query) {
-  //remove spaces around the query
-  query = removeSpace(query);
-  //remove "" around the query
+  var result = "";
+  var tabCount = 0;
+  var isQuoted = false;
+  //unquote the query
   if (
     query.charAt(0) == '"' &&
     query.charAt(query.length - 1) == '"' &&
     query.length >= 2
   ) {
+    isQuoted = true;
     query = query.substr(1, query.length - 2);
+    query = unescapeManual(query);
   }
-  var result = "";
-  var tabCount = 0;
   //inPhrase indicates whether we are traversing the quoted text
   var inPhrase = false;
   for (let idx = 0; idx < query.length; idx++) {
+    // console.log(query.charAt(idx));
     if (query.charAt(idx) == '"') {
       //toggle inPhrase when ' " ' is encountered
       inPhrase = !inPhrase;
@@ -121,6 +124,11 @@ function format(query) {
       //in case quoted text contains newline character, cursor should move onto the next line but should not change the current block
       if (query.charAt(idx) == "\n") {
         result = result + "\t".repeat(tabCount);
+      } else if (query.charAt(idx) == "\\" && isQuoted) {
+        if (idx + 1 < query.length) {
+          result = result + query.charAt(idx + 1);
+          idx++;
+        }
       }
       continue;
     }
@@ -131,14 +139,18 @@ function format(query) {
       query.charAt(idx) == "\n" ||
       query.charAt(idx) == "\r"
     ) {
-      continue;
-    }
-    //handle ',' separately
-    if (query.charAt(idx) == ",") {
-      //incase cursor is at the starting of a new line, add tab spacing to get into the current block
-      if (result.charAt(result.length - 1) == "\n") {
+      if (
+        result.charAt(result.length - 1) == "\t" ||
+        result.charAt(result.length - 1) == "\n"
+      ) {
+        continue;
+      } else {
+        result = result + "\n";
         result = result + "\t".repeat(tabCount);
       }
+    }
+    //handle ',' separately
+    else if (query.charAt(idx) == ",") {
       //append ','
       result = result + query.charAt(idx);
       //jump onto new line and respective indent block after each ','
@@ -195,31 +207,8 @@ function format(query) {
 /**
  * @param {string} query
  */
-function removeSpace(query) {
-  var l = 0,
-    r = query.length - 1;
-  //remove space characters from starting
-  while (
-    l < query.length &&
-    (query[l] == " " ||
-      query[l] == "\r" ||
-      query[l] == "\t" ||
-      query[l] == "\n")
-  ) {
-    l++;
-  }
-  //remove space characters from end
-  while (
-    r >= 0 &&
-    (query[r] == " " ||
-      query[r] == "\r" ||
-      query[r] == "\t" ||
-      query[r] == "\n")
-  ) {
-    r--;
-  }
-  if (l > r) {
-    return "";
-  }
-  return query.substr(l, r - l + 1);
+function unescapeManual(query) {
+  return query
+    .replace(/\\\\/g, "\\") // backslash
+    .replace(/\\\"/g, '"'); // closing quote character
 }
