@@ -57,8 +57,8 @@ function activate(context) {
                     );
                     //if nothing was selected by the user,deselect everything by moving cursor to the end after replacing the text
                     if (selection.isEmpty) {
-                      var postion = editor.selection.end;
-                      editor.selection = new vscode.Selection(postion, postion);
+                      var position = editor.selection.end;
+                      editor.selection = new vscode.Selection(position, position);
                     }
                   });
               }
