@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
-const {window,commands,Range,Position,Selection} =require('vscode')
-const vscode=require('vscode')
+const { window, commands, Range, Position, Selection } = require("vscode");
+const vscode = require("vscode");
 // this method is called when extension is activated
 
 /**
@@ -27,10 +27,7 @@ function activate(context) {
             window.showInformationMessage("Please provide some text");
           } else {
             console.log("Indenting Lucene Query...");
-            window.setStatusBarMessage(
-              "Indenting Lucene Query...",
-              1000
-            );
+            window.setStatusBarMessage("Indenting Lucene Query...", 1000);
             try {
               //format query
               var result = format(textSelection);
@@ -50,16 +47,11 @@ function activate(context) {
                   )
                   .then((success) => {
                     console.log("Indented successfully: " + success);
-                    window.showInformationMessage(
-                      "Indented successfully !"
-                    );
+                    window.showInformationMessage("Indented successfully !");
                     //if nothing was selected by the user,deselect everything by moving cursor to the end after replacing the text
                     if (selection.isEmpty) {
                       var position = editor.selection.end;
-                      editor.selection = new Selection(
-                        position,
-                        position
-                      );
+                      editor.selection = new Selection(position, position);
                     }
                   });
               }
