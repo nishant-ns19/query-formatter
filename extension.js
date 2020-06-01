@@ -125,12 +125,7 @@ function format(query) {
       continue;
     }
     //handling spacing characters in the string
-    if (
-      query.charAt(idx) == " " ||
-      query.charAt(idx) == "\t" ||
-      query.charAt(idx) == "\n" ||
-      query.charAt(idx) == "\r"
-    ) {
+    if (isSpacingCharacter(query.charAt(idx))) {
       if (
         result.charAt(result.length - 1) == "\t" ||
         result.charAt(result.length - 1) == "\n"
@@ -150,11 +145,7 @@ function format(query) {
       result = result + "\t".repeat(tabCount);
     }
     //start a new block whenever an opening paranthesis is encountered
-    else if (
-      query.charAt(idx) == "(" ||
-      query.charAt(idx) == "[" ||
-      query.charAt(idx) == "{"
-    ) {
+    else if (isOpeningParanthesis(query.charAt(idx))) {
       result = result + query.charAt(idx);
       //jump onto new line
       result = result + "\n";
@@ -163,11 +154,7 @@ function format(query) {
       result = result + "\t".repeat(tabCount);
     }
     //end the current block whenever a closing paranthesis is encountered
-    else if (
-      query.charAt(idx) == ")" ||
-      query.charAt(idx) == "]" ||
-      query.charAt(idx) == "}"
-    ) {
+    else if (isClosingParanthesis(query.charAt(idx))) {
       //if the cursor has already moved onto the next line, remove '\t' from end as cursor needs to go back to the previous block
       if (result.charAt(result.length - 1) == "\t") {
         result = result.substr(0, result.length - 1);
@@ -203,4 +190,26 @@ function unescapeManual(query) {
   return query
     .replace(/\\\\/g, "\\") // backslash
     .replace(/\\\"/g, '"'); // closing quote character
+}
+
+function isOpeningParanthesis(ch) {
+  if (ch == "(" || ch == "[" || ch == "{") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function isClosingParanthesis(ch) {
+  if (ch == ")" || ch == "]" || ch == "}") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function isSpacingCharacter(ch) {
+  if (ch == " " || ch == "\t" || ch == "\n" || ch == "\r") {
+    return true;
+  } else {
+    return false;
+  }
 }
