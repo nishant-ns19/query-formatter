@@ -100,7 +100,7 @@ function format(query) {
   for (let idx = 0; idx < query.length; idx++) {
     // console.log(query.charAt(idx));
     if (query.charAt(idx) == '"') {
-      //toggle inPhrase when ' " ' is encountered
+      //toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       result = result + query.charAt(idx);
       //jump onto the next line after completing each phrase(quoted text)
@@ -124,7 +124,7 @@ function format(query) {
       }
       continue;
     }
-    //remove exisiting spacing characters from the string
+    //handling spacing characters in the string
     if (
       query.charAt(idx) == " " ||
       query.charAt(idx) == "\t" ||
