@@ -23,7 +23,7 @@ function prettify(query) {
   let inPhrase = false;
   for (let idx = 0; idx < query.length; idx++) {
     // console.log(query.charAt(idx));
-    if (query.charAt(idx) === '"') {
+    if (query.charAt(idx) === '\"') {
       //toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       result = result.concat(query.charAt(idx));
@@ -109,7 +109,7 @@ function prettify(query) {
 function unescapeManual(query) {
   return query
     .replace(/\\\\/g, "\\") // backslash
-    .replace(/\\\"/g, '"'); // quote character
+    .replace(/\\\"/g, '\"'); // quote character
 }
 
 /**
