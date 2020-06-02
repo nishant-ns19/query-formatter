@@ -26,7 +26,7 @@ function prettify(query) {
     if (query.charAt(idx) === '"') {
       //toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
-      result = result + query.charAt(idx);
+      result = result.concat(query.charAt(idx));
       //jump onto the next line after completing each phrase(quoted text)
       if (!inPhrase) {
         result = result.concat(addNewlineTab(tabCount));
@@ -35,7 +35,7 @@ function prettify(query) {
     }
     //quoted text should be printed as it is
     if (inPhrase) {
-      result = result + query.charAt(idx);
+      result = result.concat(query.charAt(idx));
       //in case quoted text contains newline character, cursor should move onto the next line but should not change the current block
       if (query.charAt(idx) === NEW_LINE) {
         result = result.concat(addNewlineTab(tabCount,false));
@@ -44,7 +44,7 @@ function prettify(query) {
         isQuoted &&
         idx < query.length - 1
       ) {
-        result = result + query.charAt(idx + 1);
+        result = result.concat(query.charAt(idx + 1));
         idx++;
       }
       continue;
@@ -63,13 +63,13 @@ function prettify(query) {
     //handle ',' separately
     else if (query.charAt(idx) === ",") {
       //append ','
-      result = result + query.charAt(idx);
+      result = result.concat(query.charAt(idx));
       //jump onto new line and respective indent block after each ','
       result = result.concat(addNewlineTab(tabCount));
     }
     //start a new block whenever an opening paranthesis is encountered
     else if (isOpening(query.charAt(idx))) {
-      result = result + query.charAt(idx);
+      result = result.concat(query.charAt(idx));
       //add a new block by increasing number of tabs
       tabCount++;
       //jump onto new line and block
@@ -87,7 +87,7 @@ function prettify(query) {
       }
       //decrement tabCount due to closing of the block
       tabCount = Math.max(tabCount - 1, 0);
-      result = result + query.charAt(idx);
+      result = result.concat(query.charAt(idx));
       //incase there is a ',' after closing a block, it has to be printed just after closing so continue without moving onto the next line
       if (idx < query.length - 1 && query.charAt(idx + 1) === ",") {
         continue;
@@ -97,7 +97,7 @@ function prettify(query) {
     }
     //in any other cases, just print the character
     else {
-      result = result + query.charAt(idx);
+      result = result.concat(query.charAt(idx));
     }
   }
   return result;
