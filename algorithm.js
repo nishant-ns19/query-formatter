@@ -1,11 +1,11 @@
-const TAB = "\t";
-const NEW_LINE = "\n";
-const WHITESPACE = " ";
-const RETURN = "\r";
+const TAB = "\t",
+  NEW_LINE = "\n",
+  WHITESPACE = " ",
+  RETURN = "\r";
 /**
  * @param {string} query
  */
-function format(query) {
+function prettify(query) {
   let result = "";
   let tabCount = 0;
   let isQuoted = false;
@@ -29,8 +29,7 @@ function format(query) {
       result = result + query.charAt(idx);
       //jump onto the next line after completing each phrase(quoted text)
       if (!inPhrase) {
-        result = result + NEW_LINE;
-        result = addTabs(result, tabCount);
+        result = result.concat(addNewlineTab(tabCount));
       }
       continue;
     }
@@ -39,12 +38,14 @@ function format(query) {
       result = result + query.charAt(idx);
       //in case quoted text contains newline character, cursor should move onto the next line but should not change the current block
       if (query.charAt(idx) === NEW_LINE) {
-        result = addTabs(result, tabCount);
-      } else if (query.charAt(idx) === "\\" && isQuoted) {
-        if (idx + 1 < query.length) {
-          result = result + query.charAt(idx + 1);
-          idx++;
-        }
+        result = result.concat(addNewlineTab(tabCount,false));
+      } else if (
+        query.charAt(idx) === "\\" &&
+        isQuoted &&
+        idx < query.length - 1
+      ) {
+        result = result + query.charAt(idx + 1);
+        idx++;
       }
       continue;
     }
@@ -56,8 +57,7 @@ function format(query) {
       ) {
         continue;
       } else {
-        result = result + NEW_LINE;
-        result = addTabs(result, tabCount);
+        result = result.concat(addNewlineTab(tabCount));
       }
     }
     //handle ',' separately
@@ -65,17 +65,15 @@ function format(query) {
       //append ','
       result = result + query.charAt(idx);
       //jump onto new line and respective indent block after each ','
-      result = result + NEW_LINE;
-      result = addTabs(result, tabCount);
+      result = result.concat(addNewlineTab(tabCount));
     }
     //start a new block whenever an opening paranthesis is encountered
     else if (isOpening(query.charAt(idx))) {
       result = result + query.charAt(idx);
-      //jump onto new line
-      result = result + NEW_LINE;
       //add a new block by increasing number of tabs
       tabCount++;
-      result = addTabs(result, tabCount);
+      //jump onto new line and block
+      result = result.concat(addNewlineTab(tabCount));
     }
     //end the current block whenever a closing paranthesis is encountered
     else if (isClosing(query.charAt(idx))) {
@@ -85,8 +83,7 @@ function format(query) {
       }
       //otherwise, move onto the next line, get onto the previous block
       else {
-        result = result + NEW_LINE;
-        result = addTabs(result, tabCount - 1);
+        result = result.concat(addNewlineTab(tabCount - 1));
       }
       //decrement tabCount due to closing of the block
       tabCount = Math.max(tabCount - 1, 0);
@@ -96,8 +93,7 @@ function format(query) {
         continue;
       }
       //otherwise, move onto the next line, jump onto the current block
-      result = result + NEW_LINE;
-      result = result + TAB.repeat(tabCount);
+      result = result.concat(addNewlineTab(tabCount));
     }
     //in any other cases, just print the character
     else {
@@ -142,14 +138,14 @@ function isSpacingCharacter(ch) {
 }
 
 /**
- * @param {string} result
  * @param {number} count
  */
-function addTabs(result, count) {
-  if (count < 0) return result;
-  return result + TAB.repeat(count);
+function addNewlineTab(count, flag = true) {
+  return flag
+    ? NEW_LINE.concat(TAB.repeat(Math.max(count, 0)))
+    : TAB.repeat(Math.max(count, 0));
 }
 
 module.exports = {
-  format,
+  prettify,
 };

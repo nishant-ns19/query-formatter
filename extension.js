@@ -2,7 +2,7 @@
 const { window, commands, Range, Position, Selection } = require("vscode");
 // eslint-disable-next-line no-unused-vars
 const vscode = require("vscode");
-const { format } = require("./algorithm.js");
+const { prettify } = require("./algorithm.js");
 
 // this method is called when extension is activated
 /**
@@ -32,7 +32,7 @@ function activate(context) {
             window.setStatusBarMessage("Indenting Lucene Query...", 1000);
             try {
               //format query
-              let result = format(textSelection);
+              let result = prettify(textSelection);
               if (result !== textSelection) {
                 //use editor object to replace the text
                 editor
