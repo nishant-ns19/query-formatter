@@ -120,33 +120,25 @@ function unescapeManual(query) {
  * @param {string} bracket
  */
 function isOpening(bracket) {
-  if (bracket === "(" || bracket === "[" || bracket === "{") {
-    return true;
-  } else {
-    return false;
-  }
+  if (bracket === "(" || bracket === "[" || bracket === "{") return true;
+  return false;
 }
 
 /**
  * @param {string} bracket
  */
 function isClosing(bracket) {
-  if (bracket === ")" || bracket === "]" || bracket === "}") {
-    return true;
-  } else {
-    return false;
-  }
+  if (bracket === ")" || bracket === "]" || bracket === "}") return true;
+  return false;
 }
 
 /**
  * @param {string} ch
  */
 function isSpacingCharacter(ch) {
-  if (ch === WHITESPACE || ch === TAB || ch === NEW_LINE || ch === RETURN) {
+  if (ch === WHITESPACE || ch === TAB || ch === NEW_LINE || ch === RETURN)
     return true;
-  } else {
-    return false;
-  }
+  return false;
 }
 
 /**

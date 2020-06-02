@@ -1,7 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 const { window, commands, Range, Position, Selection } = require("vscode");
+// eslint-disable-next-line no-unused-vars
 const vscode = require("vscode");
-const { format } = require("./constants.js");
+const { format } = require("./algorithm.js");
 
 // this method is called when extension is activated
 /**
