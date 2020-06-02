@@ -136,8 +136,7 @@ function isClosing(bracket) {
  * @param {string} ch
  */
 function isSpacingCharacter(ch) {
-  if (ch === WHITESPACE || ch === TAB || ch === NEW_LINE || ch === RETURN)
-    return true;
+  if (ch === WHITESPACE || ch === TAB || ch === NEW_LINE) return true;
   return false;
 }
 
