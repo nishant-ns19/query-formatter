@@ -11,8 +11,8 @@ of queries. This extension can be very handy for engineers working in large orga
 
 ## Key Bindings
 - For Mac:  "shift+cmd+i"
-- For Non-Mac: "shift+ctrl+i" <br/>
-### OR
+- For Non-Mac: "shift+ctrl+i"
+#### OR
 - Open Command Palette , choose "Format Query"
 
 ## Requirements
