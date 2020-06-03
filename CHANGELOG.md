@@ -2,8 +2,26 @@
 
 All notable changes to the "query-formatter" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Unreleased]
 
-- Initial release
+## [0.0.1]
+- Demo release
+
+## [1.0.0]
+- Initial release of Lucene Query Formatter for formatting and improving readability of lucene query string objects
+
+## [1.0.1]
+- Bug Fixes
+
+## [1.0.2]
+- Bug Fixes
+
+## [1.0.3]
+- Refined Readme
+
+## [1.1.0]
+- Added support for removing multiple spaces from the query
+- Added support for unescaping character in completely quoted queries
+- Improved formatting
+
