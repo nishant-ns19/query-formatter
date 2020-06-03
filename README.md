@@ -10,24 +10,19 @@ to read and debug manually but with this formatter you can prettify your object 
 of queries. This extension can be very handy for engineers working in large organisations with Elastic Search database in JAVA.
 
 ## Key Bindings
-For Mac:  "shift+cmd+i"
-
-For Non-Mac: "shift+ctrl+i"
-
-            OR
-
-Open Command Palette , choose "Format Query"
+- For Mac:  "shift+cmd+i"
+- For Non-Mac: "shift+ctrl+i"
+    OR
+- Open Command Palette , choose "Format Query"
 
 ## Requirements
 QUERY MUST NOT CONTAIN ANY VALIDATION ERROR.
 
 ## EXAMPLE
-Original Query: 
+- Original Query: 
 
 ![](/images/before.jpg)
 
-Indented Query:
+- Indented Query:
 
 ![](/images/after.jpg)
-
-NISHANT SINGH
