@@ -9,7 +9,7 @@ const TAB = "\t",
 function unescapeManual(query) {
   return query
     .replace(/\\\\/g, "\\") // backslash
-    .replace(/\\\"/g, '"'); // quote character
+    .replace(/\\\"/g, '\"'); // quote character
 }
 
 /**

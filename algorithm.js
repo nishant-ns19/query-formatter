@@ -24,8 +24,8 @@ function formatLuceneQuery(query) {
   let inPhrase = false;
   // unquote the query
   if (
-    query.charAt(0) === '"' &&
-    query.charAt(query.length - 1) === '"' &&
+    query.charAt(0) === '\"' &&
+    query.charAt(query.length - 1) === '\"' &&
     query.length >= 2
   ) {
     isQuoted = true;
@@ -33,7 +33,7 @@ function formatLuceneQuery(query) {
     query = unescapeManual(query);
   }
   for (let idx = 0; idx < query.length; idx++) {
-    if (query.charAt(idx) === '"') {
+    if (query.charAt(idx) === '\"') {
       // toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       result = result.concat(query.charAt(idx));
