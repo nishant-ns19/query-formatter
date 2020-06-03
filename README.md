@@ -1,7 +1,7 @@
 # README
 
 ## NOTE:
-** THIS EXTENSION IS HELPFUL FOR DEBUGGING LOGICAL ERRORS ONLY. **
+*THIS EXTENSION IS HELPFUL FOR DEBUGGING LOGICAL ERRORS ONLY.*
 
 ## Features
 This extension is made for formatting object strings of Lucene Queries. These object strings are one liner
@@ -11,8 +11,8 @@ of queries. This extension can be very handy for engineers working in large orga
 
 ## Key Bindings
 - For Mac:  "shift+cmd+i"
-- For Non-Mac: "shift+ctrl+i"
-<br/>       OR
+- For Non-Mac: "shift+ctrl+i" <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;OR
 - Open Command Palette , choose "Format Query"
 
 ## Requirements
