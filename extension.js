@@ -59,7 +59,7 @@ function activate(context) {
               }
             } catch (error) {
               console.log("Error occurred: " + error);
-              window.showInformationMessage("Unable to process text !:\n" + error);
+              window.showInformationMessage("Unable to process text due to " + error);
             }
           }
         }
