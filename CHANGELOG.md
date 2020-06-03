@@ -22,4 +22,3 @@ All notable changes to the "Lucene Query Formatter" extension will be documented
 - Added support for removing multiple spaces from the query
 - Added support for unescaping character in completely quoted queries
 - Improved formatting
-
