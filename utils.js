@@ -85,7 +85,7 @@ function removeMultipleSpaces(query, isQuoted) {
         queryNew = queryNew.substr(0, queryNew.length - 1);
       }
 
-      while (isSpacingCharacter(query.charAt(idx)) && idx < query.length) {
+      while (idx < query.length && isSpacingCharacter(query.charAt(idx))) {
         idx++;
       }
 

@@ -94,15 +94,16 @@ function formatLuceneQuery(query) {
       result = result.concat(addNewlineTabs(tabCount));
       continue;
     }
+
     // end the current block whenever a closing paranthesis is encountered
     if (isClosing(query.charAt(idx))) {
       // if the cursor has already moved onto the next line,
       // remove TAB from end as cursor needs to go back to the previous block
+      // otherwise, move onto the next line, get onto the previous block
       result =
         result.length > 1 && result.charAt(result.length - 1) === TAB
           ? result.substr(0, result.length - 1)
           : result.concat(addNewlineTabs(tabCount - 1));
-
       tabCount = Math.max(tabCount - 1, 0);
       result = result.concat(query.charAt(idx));
       // incase there is a ',' after closing a block, it has to be printed just
@@ -112,6 +113,7 @@ function formatLuceneQuery(query) {
       }
       continue;
     }
+
     // in any other cases, just print the character
     result = result.concat(query.charAt(idx));
   }
