@@ -5,7 +5,7 @@ const {
   RETURN,
   // eslint-disable-next-line no-unused-vars
   WHITESPACE,
-  addNewlineTab,
+  addNewlineTabs,
   isClosing,
   isOpening,
   unescapeManual,
@@ -43,7 +43,7 @@ function formatLuceneQuery(query) {
       // jump onto the next line after completing each quoted text segment
       if (!inPhrase) {
         if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
-          result = result.concat(addNewlineTab(tabCount));
+          result = result.concat(addNewlineTabs(tabCount));
         }
       }
       continue;
@@ -55,7 +55,7 @@ function formatLuceneQuery(query) {
       // in case quoted text contains newline character,
       // cursor should move onto the next line but should not change the current block
       if (query.charAt(idx) === NEW_LINE) {
-        result = result.concat(addNewlineTab(tabCount, false));
+        result = result.concat(addNewlineTabs(tabCount, false));
       }
       // unescape characters when query retrieved is quoted
       else if (
@@ -77,7 +77,7 @@ function formatLuceneQuery(query) {
       ) {
         continue;
       } else {
-        result = result.concat(addNewlineTab(tabCount));
+        result = result.concat(addNewlineTabs(tabCount));
       }
       continue;
     }
@@ -91,7 +91,7 @@ function formatLuceneQuery(query) {
       //add a new block when opening bracket is encountered
       tabCount = tabCount + (isOpening(query.charAt(idx)) ? 1 : 0);
       result = result.concat(query.charAt(idx));
-      result = result.concat(addNewlineTab(tabCount));
+      result = result.concat(addNewlineTabs(tabCount));
       continue;
     }
     // end the current block whenever a closing paranthesis is encountered
@@ -101,14 +101,14 @@ function formatLuceneQuery(query) {
       result =
         result.length > 1 && result.charAt(result.length - 1) === TAB
           ? result.substr(0, result.length - 1)
-          : result.concat(addNewlineTab(tabCount - 1));
+          : result.concat(addNewlineTabs(tabCount - 1));
 
       tabCount = Math.max(tabCount - 1, 0);
       result = result.concat(query.charAt(idx));
       // incase there is a ',' after closing a block, it has to be printed just
       // after closing so continue without moving onto the next line
       if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
-        result = result.concat(addNewlineTab(tabCount));
+        result = result.concat(addNewlineTabs(tabCount));
       }
       continue;
     }

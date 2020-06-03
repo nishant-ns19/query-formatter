@@ -40,7 +40,7 @@ function isSpacingCharacter(ch) {
 /**
  * @param {number} count
  */
-function addNewlineTab(count, flag = true) {
+function addNewlineTabs(count, flag = true) {
   return flag
     ? NEW_LINE.concat(TAB.repeat(Math.max(count, 0)))
     : TAB.repeat(Math.max(count, 0));
@@ -102,7 +102,7 @@ module.exports = {
   NEW_LINE,
   RETURN,
   WHITESPACE,
-  addNewlineTab,
+  addNewlineTabs,
   isClosing,
   isOpening,
   isCommaOrColon,
