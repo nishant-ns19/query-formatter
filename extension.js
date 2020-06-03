@@ -28,7 +28,7 @@ function activate(context) {
           if (!textSelection) {
             window.showInformationMessage("Please provide some text");
           } else {
-            console.log("Indenting Lucene Query...");
+            console.log("Indenting Lucene Query..");
             window.setStatusBarMessage("Indenting Lucene Query...", 1000);
             try {
               //format query
@@ -59,7 +59,7 @@ function activate(context) {
               }
             } catch (error) {
               console.log("Error occurred: " + error);
-              window.showInformationMessage("Unable to process text !");
+              window.showInformationMessage("Unable to process text !:\n" + error);
             }
           }
         }
