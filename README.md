@@ -1,4 +1,4 @@
-## query-formatter README
+# README
 
 ## NOTE:
 ** THIS EXTENSION IS HELPFUL FOR DEBUGGING LOGICAL ERRORS ONLY. **
@@ -18,12 +18,10 @@ For Non-Mac: "shift+ctrl+i"
 
 Open Command Palette , choose "Format Query"
 
-
 ## Requirements
 QUERY MUST NOT CONTAIN ANY VALIDATION ERROR.
 
 ## EXAMPLE
-
 Original Query: 
 
 ![](/images/before.jpg)

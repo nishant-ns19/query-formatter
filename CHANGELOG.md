@@ -1,7 +1,5 @@
 # Change Log
-
-All notable changes to the "query-formatter" extension will be documented in this file.
-
+All notable changes to the "Lucene Query Formatter" extension will be documented in this file.
 
 ## [Unreleased]
 
