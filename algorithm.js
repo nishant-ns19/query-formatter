@@ -42,6 +42,8 @@ function formatLuceneQuery(query) {
       result = result.concat(query.charAt(idx));
       // jump onto the next line after completing each quoted text segment
       if (!inPhrase) {
+        // incase there is a ',' or ':' after closing a block, it has to be printed
+        // without moving onto next line
         if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
           result = result.concat(addNewlineTabs(tabCount));
         }
@@ -53,7 +55,7 @@ function formatLuceneQuery(query) {
     if (inPhrase) {
       result = result.concat(query.charAt(idx));
       // in case quoted text contains newline character,
-      // cursor should move onto the next line but should not change the current block
+      // cursor should move onto the current block
       if (query.charAt(idx) === NEW_LINE) {
         result = result.concat(addNewlineTabs(tabCount, false));
       }
@@ -106,8 +108,8 @@ function formatLuceneQuery(query) {
           : result.concat(addNewlineTabs(tabCount - 1));
       tabCount = Math.max(tabCount - 1, 0);
       result = result.concat(query.charAt(idx));
-      // incase there is a ',' after closing a block, it has to be printed just
-      // after closing so continue without moving onto the next line
+      // incase there is a ',' or ':' after closing a block, it has to be printed
+      // without moving onto next line
       if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
         result = result.concat(addNewlineTabs(tabCount));
       }

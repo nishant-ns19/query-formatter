@@ -54,7 +54,6 @@ function isCommaOrColon(ch) {
   return false;
 }
 
-// function to remove unquoted multiple spaces in query
 /**
  * @param {string} query
  * @param {boolean} isQuoted
@@ -78,8 +77,9 @@ function removeMultipleSpaces(query, isQuoted) {
       }
       continue;
     }
-    // 'queryNew = queryNew.substr(0, queryNew.length - 1)' is used to
-    // remove complete space sequence when found around a comma or colon
+
+    // 'queryNew = queryNew.substr(0, queryNew.length - 1)' is used to remove
+    // complete space sequence when found around a comma(,) or colon(:)
     if (isSpacingCharacter(query.charAt(idx))) {
       if (idx - 1 >= 0 && isCommaOrColon(query.charAt(idx - 1))) {
         queryNew = queryNew.substr(0, queryNew.length - 1);
