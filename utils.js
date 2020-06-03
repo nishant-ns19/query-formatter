@@ -70,7 +70,7 @@ function removeMultipleSpaces(query, isQuoted) {
     }
 
     if (inPhrase) {
-      // unescaping character
+      // escaping character
       if (query.charAt(idx) === "\\" && isQuoted && idx < query.length - 1) {
         queryNew = queryNew.concat(query.charAt(idx + 1));
         idx++;

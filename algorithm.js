@@ -20,10 +20,11 @@ const {
 function formatLuceneQuery(query) {
   let result = "";
   let tabCount = 0;
-  // true if complete input is quoted
+  // indicates whether the entire input is quoted
   let isQuoted = false;
-  // inPhrase indicates whether we are currently traversing the quoted text
+  // indicates whether we are currently traversing the quoted text
   let inPhrase = false;
+
   // unquote the query
   if (
     query.charAt(0) === '"' &&
@@ -34,16 +35,19 @@ function formatLuceneQuery(query) {
     query = query.substr(1, query.length - 2);
     query = unescapeManual(query);
   }
+
   query = removeMultipleSpaces(query, isQuoted);
+
   for (let idx = 0; idx < query.length; idx++) {
     if (query.charAt(idx) === '"') {
       // toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       result = result.concat(query.charAt(idx));
+
       // jump onto the next line after completing each quoted text segment
       if (!inPhrase) {
-        // incase there is a ',' or ':' after closing a block, it has to be printed
-        // without moving onto next line
+        // in case next character is neither comma(,) nor colon(:),
+        // move onto the next line
         if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
           result = result.concat(addNewlineTabs(tabCount));
         }
@@ -54,12 +58,12 @@ function formatLuceneQuery(query) {
     // quoted text should be printed as it is
     if (inPhrase) {
       result = result.concat(query.charAt(idx));
-      // in case quoted text contains newline character,
-      // cursor should move onto the current block
+      // in case quoted text contains newline character, pointer should
+      // move onto the next line but should not change the current block
       if (query.charAt(idx) === NEW_LINE) {
         result = result.concat(addNewlineTabs(tabCount, false));
       }
-      // unescape characters when query retrieved is quoted
+      // escaping character
       else if (
         query.charAt(idx) === "\\" &&
         isQuoted &&
@@ -90,8 +94,8 @@ function formatLuceneQuery(query) {
     }
 
     if (query.charAt(idx) === "," || isOpening(query.charAt(idx))) {
-      //add a new block when opening bracket is encountered
-      tabCount = tabCount + (isOpening(query.charAt(idx)) ? 1 : 0);
+      // add a new block when opening bracket is encountered
+      tabCount += isOpening(query.charAt(idx)) ? 1 : 0;
       result = result.concat(query.charAt(idx));
       result = result.concat(addNewlineTabs(tabCount));
       continue;
@@ -108,15 +112,14 @@ function formatLuceneQuery(query) {
           : result.concat(addNewlineTabs(tabCount - 1));
       tabCount = Math.max(tabCount - 1, 0);
       result = result.concat(query.charAt(idx));
-      // incase there is a ',' or ':' after closing a block, it has to be printed
-      // without moving onto next line
+
       if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
         result = result.concat(addNewlineTabs(tabCount));
       }
       continue;
     }
 
-    // in any other cases, just print the character
+    // in any other case, just print the character
     result = result.concat(query.charAt(idx));
   }
   return result;

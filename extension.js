@@ -15,26 +15,28 @@ function activate(context) {
     function () {
       let editor = window.activeTextEditor;
       if (editor) {
-        //retrieve current document
+        // retrieve current document
         const document = editor.document;
         if (!document) {
           window.showInformationMessage("No document detected");
         } else {
           const selection = editor.selection;
-          //retrieve selected text and if nothing is selected, everything is retrieved
+          
+          // retrieve selected text and if nothing is selected, everything is retrieved
           const textSelection = selection.isEmpty
             ? document.getText().trim()
             : document.getText(selection).trim();
+
           if (!textSelection) {
             window.showInformationMessage("Please provide some text");
           } else {
             console.log("Indenting Lucene Query...");
             window.setStatusBarMessage("Indenting Lucene Query...", 1000);
             try {
-              //format query
+              // format query
               let result = formatLuceneQuery(textSelection);
               if (result !== textSelection) {
-                //use editor object to replace the text
+                // use editor object to replace the text
                 editor
                   .edit((builder) =>
                     builder.replace(
@@ -50,7 +52,8 @@ function activate(context) {
                   .then((success) => {
                     console.log("Indented successfully: " + success);
                     window.showInformationMessage("Indented successfully !");
-                    //if nothing was selected by the user,deselect everything by moving cursor to the end after replacing the text
+                    // if nothing was selected by the user,
+                    // deselect everything by moving cursor to the end after replacing the text
                     if (selection.isEmpty) {
                       let position = editor.selection.end;
                       editor.selection = new Selection(position, position);
