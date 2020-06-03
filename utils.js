@@ -71,6 +71,7 @@ function removeMultipleSpaces(query, isQuoted) {
     }
 
     if (inPhrase) {
+      // unescaping character
       if (query.charAt(idx) === "\\" && isQuoted && idx < query.length - 1) {
         queryNew = queryNew.concat(query.charAt(idx + 1));
         idx++;
@@ -78,7 +79,7 @@ function removeMultipleSpaces(query, isQuoted) {
       continue;
     }
     // 'queryNew = queryNew.substr(0, queryNew.length - 1)' is used to
-    // remove complete space sequence when found near a comma or colon
+    // remove complete space sequence when found around a comma or colon
     if (isSpacingCharacter(query.charAt(idx))) {
       if (idx - 1 >= 0 && isCommaOrColon(query.charAt(idx - 1))) {
         queryNew = queryNew.substr(0, queryNew.length - 1);
