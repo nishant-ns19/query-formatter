@@ -9,7 +9,7 @@ which can contain thousands of words in case of complex queries due to which it 
 to read and debug manually but with this formatter you can prettify your object and get a better readability
 of queries. This extension can be very handy for engineers working in large organisations with Elastic Search database in JAVA.
 
-## Key Bindings
+## How to use
 - For Mac:  "shift+cmd+i"
 - For Non-Mac: "shift+ctrl+i"
 ####     OR
