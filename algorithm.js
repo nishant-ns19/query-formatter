@@ -10,6 +10,8 @@ const {
   isOpening,
   unescapeManual,
   isSpacingCharacter,
+  isCommaOrColon,
+  removeMultipleSpaces,
 } = require("./utils.js");
 
 /**
@@ -24,22 +26,25 @@ function formatLuceneQuery(query) {
   let inPhrase = false;
   // unquote the query
   if (
-    query.charAt(0) === '\"' &&
-    query.charAt(query.length - 1) === '\"' &&
+    query.charAt(0) === '"' &&
+    query.charAt(query.length - 1) === '"' &&
     query.length >= 2
   ) {
     isQuoted = true;
     query = query.substr(1, query.length - 2);
     query = unescapeManual(query);
   }
+  query = removeMultipleSpaces(query, isQuoted);
   for (let idx = 0; idx < query.length; idx++) {
-    if (query.charAt(idx) === '\"') {
+    if (query.charAt(idx) === '"') {
       // toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       result = result.concat(query.charAt(idx));
-      // jump onto the next line after completing each phrase(quoted text)
+      // jump onto the next line after completing each quoted text segment
       if (!inPhrase) {
-        result = result.concat(addNewlineTab(tabCount));
+        if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
+          result = result.concat(addNewlineTab(tabCount));
+        }
       }
       continue;
     }
@@ -47,10 +52,13 @@ function formatLuceneQuery(query) {
     // quoted text should be printed as it is
     if (inPhrase) {
       result = result.concat(query.charAt(idx));
-      // in case quoted text contains newline character, cursor should move onto the next line but should not change the current block
+      // in case quoted text contains newline character,
+      // cursor should move onto the next line but should not change the current block
       if (query.charAt(idx) === NEW_LINE) {
         result = result.concat(addNewlineTab(tabCount, false));
-      } else if (
+      }
+      // unescape characters when query retrieved is quoted
+      else if (
         query.charAt(idx) === "\\" &&
         isQuoted &&
         idx < query.length - 1
@@ -60,6 +68,7 @@ function formatLuceneQuery(query) {
       }
       continue;
     }
+
     // handling spacing characters in the string
     if (isSpacingCharacter(query.charAt(idx))) {
       if (
@@ -72,6 +81,7 @@ function formatLuceneQuery(query) {
       }
       continue;
     }
+
     if (query.charAt(idx) === ":") {
       result = result.concat(": ");
       continue;
@@ -92,11 +102,12 @@ function formatLuceneQuery(query) {
         result.length > 1 && result.charAt(result.length - 1) === TAB
           ? result.substr(0, result.length - 1)
           : result.concat(addNewlineTab(tabCount - 1));
-      // decrement tabCount due to closing of the block
+
       tabCount = Math.max(tabCount - 1, 0);
       result = result.concat(query.charAt(idx));
-      // incase there is a ',' after closing a block, it has to be printed just after closing so continue without moving onto the next line
-      if (idx == query.length - 1 || query.charAt(idx + 1) !== ",") {
+      // incase there is a ',' after closing a block, it has to be printed just
+      // after closing so continue without moving onto the next line
+      if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
         result = result.concat(addNewlineTab(tabCount));
       }
       continue;
