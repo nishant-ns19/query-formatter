@@ -122,7 +122,7 @@ function formatLuceneQuery(query) {
     // in any other case, just print the character
     result = result.concat(query.charAt(idx));
   }
-  return result;
+  return result.trim();
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
-const TAB = "\t",
-  NEW_LINE = "\n",
-  WHITESPACE = " ",
-  RETURN = "\r";
+const NEW_LINE = "\n",
+  RETURN = "\r",
+  TAB = "\t",
+  WHITESPACE = " ";
 
 /**
  * @param {string} query
@@ -16,25 +16,23 @@ function unescapeManual(query) {
  * @param {string} bracket
  */
 function isOpening(bracket) {
-  if (bracket === "(" || bracket === "[" || bracket === "{") return true;
-  return false;
+  return bracket === "(" || bracket === "[" || bracket === "{" ? true : false;
 }
 
 /**
  * @param {string} bracket
  */
 function isClosing(bracket) {
-  if (bracket === ")" || bracket === "]" || bracket === "}") return true;
-  return false;
+  return bracket === ")" || bracket === "]" || bracket === "}" ? true : false;
 }
 
 /**
  * @param {string} ch
  */
 function isSpacingCharacter(ch) {
-  if (ch === WHITESPACE || ch === TAB || ch === NEW_LINE || ch == RETURN)
-    return true;
-  return false;
+  return ch === WHITESPACE || ch === TAB || ch === NEW_LINE || ch == RETURN
+    ? true
+    : false;
 }
 
 /**
@@ -50,8 +48,7 @@ function addNewlineTabs(count, flag = true) {
  * @param {string} ch
  */
 function isCommaOrColon(ch) {
-  if (ch === "," || ch === ":") return true;
-  return false;
+  return ch === "," || ch === ":" ? true : false;
 }
 
 /**

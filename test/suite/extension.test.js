@@ -1,15 +1,20 @@
-// eslint-disable-next-line no-unused-vars
-const assert = require('assert');
+const assert = require("assert");
+const { input, output } = require("./testSet");
+const { formatLuceneQuery } = require("../../algorithm.js");
+const vscode = require("vscode");
+const { before, after } = require("mocha");
 
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-const vscode = require('vscode');
-// const myExtension = require('../extension');
-
-suite('Extension Test Suite', () => {
-	vscode.window.showInformationMessage('Start all tests.');
-
-	test('Sample test', () => {
-		// no tests performed
-	});
+suite("Extension Test Suite", () => {
+  before(() => {
+    vscode.window.showInformationMessage("Tests started!");
+  });
+  assert.equal(input.length, output.length)
+  for (let i = 0; i < input.length; i++) {
+    test("Sample test " + i, () => {
+      assert.equal(output[i], formatLuceneQuery(input[i]));
+    });
+  }
+  after(() => {
+    vscode.window.showInformationMessage("All tests done!");
+  });
 });
