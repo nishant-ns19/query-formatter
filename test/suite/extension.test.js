@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const assert = require('assert');
 
 // You can import and use all API from the 'vscode' module
@@ -9,7 +10,6 @@ suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
 	test('Sample test', () => {
-		assert.equal(-1, [1, 2, 3].indexOf(5));
-		assert.equal(-1, [1, 2, 3].indexOf(0));
+		// no tests performed
 	});
 });
