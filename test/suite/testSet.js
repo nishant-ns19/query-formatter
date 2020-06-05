@@ -7,27 +7,32 @@ const input = [
     '"   "',
     '"{\\\\\\\\}"',
   ],
-  output = [
+  expectedOutput = [
     '{\n\t"name": "nishant",\n\t"age": 21\n}',
     '{\n\t"  name": "nishant",\n\t"age": 21\n}',
     '-(\n\t(\n\t\t(\n\t\t\t(\n\t\t\t\tmVadd.m_x: "modiji"\n\t\t\t)\n\t\t\t~1\n\t\t)\n\t\t(\n\t\t\t(\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\tadd.t_en: "bjp"\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\tm_en: "congress"\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\taddI.item: "rahul gandhi"\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t\tmVadd.m_x_url: "mahatma"\n\t\t\t)\n\t\t\t~1\n\t\t)\n\t\thT: (\n\t\t\t#bapu\n\t\t)\n\t\t(\n\t\t\t(\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\tmVadd.m_x: #bhakt\n\t\t\t\t\t\tmVadd.m_x: movies\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\tadd.t_en: "#stars"\n\t\t\t\t\t\tm_en: "# acting"\n\t\t\t\t\t\taddI.item: "# actress"\n\t\t\t\t\t\tmVadd.m_x_url: "# models"\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t)\n\t\t\t~1\n\t\t)\n\t\t(\n\t\t\t(\n\t\t\t\tmVadd.m_x: super*\n\t\t\t)\n\t\t\t~1\n\t\t)\n\t\t(\n\t\t\t(\n\t\t\t\tadd.t_en: nike*\n\t\t\t\tm_en: nike*\n\t\t\t\taddI.item: nike*\n\t\t\t\tmVadd.m_x_url: nike*\n\t\t\t)\n\t\t\t~1\n\t\t)\n\t\t(\n\t\t\t(\n\t\t\t\tmVadd.m_x: boy\n\t\t\t)\n\t\t\t~1\n\t\t)\n\t\t(\n\t\t\t(\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\tadd.t_en: boy\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\tm_en: boy\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t\t(\n\t\t\t\t\t(\n\t\t\t\t\t\taddI.item: boy\n\t\t\t\t\t)\n\t\t\t\t\t~1\n\t\t\t\t)\n\t\t\t\tmVadd.m_x_url: boy\n\t\t\t)\n\t\t\t~1\n\t\t)\n\t)\n\t~1\n)',
     '+add.lng: (\n\ten\n)\n+add.m_t: (\n\tFACEBOOK\n\tINSTAGRAM\n\tTWITTER\n)\n-\n(\n\t+\n\t(\n\t\t-add.auMiss: [\n\t\t\t*\n\t\t\tTO\n\t\t\t*\n\t\t]\n\t\t+*: *\n\t)\n\t+mVadd.pl_id: (\n\t\t456_1\n\t)\n)\n(\n\tmVadd.m_x: "den\\\\nis macdonald\\""\n)',
-    '',
-    '',
+    "",
+    "",
     "{\n\t\\\\\n}",
-  ];
-  // eslint-disable-next-line no-unused-vars
-  function check(){
-    for(let i=0;i<input.length;i++)
-    {
-      console.log("Input: "+i);
-      console.log(input[i]);
-      console.log("Output: "+i);
-      console.log(output[i]);
-    }
+  ],
+  lineBreak = "----------------------";
+// eslint-disable-next-line no-unused-vars
+function check() {
+  for (let i = 0; i < input.length; i++) {
+    console.log(lineBreak);
+    console.log("Input: " + i);
+    console.log(lineBreak);
+    console.log(input[i]);
+    console.log(lineBreak);
+    console.log("Expected Output: " + i);
+    console.log(lineBreak);
+    console.log(expectedOutput[i]);
   }
+}
 
 module.exports = {
   input,
-  output,
+  expectedOutput,
+  check,
 };
