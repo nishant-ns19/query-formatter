@@ -101,7 +101,7 @@ function formatLuceneQuery(query) {
       continue;
     }
 
-    // end the current block whenever a closing paranthesis is encountered
+    // end the current block whenever a closing bracket is encountered
     if (isClosing(query.charAt(idx))) {
       // if the cursor has already moved onto the next line,
       // remove TAB from end as cursor needs to go back to the previous block
