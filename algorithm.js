@@ -20,8 +20,10 @@ const {
 function formatLuceneQuery(query) {
   let result = "";
   let tabCount = 0;
+
   // indicates whether the entire input is quoted
   let isQuoted = false;
+
   // indicates whether we are currently traversing the quoted text
   let inPhrase = false;
 
@@ -40,12 +42,14 @@ function formatLuceneQuery(query) {
 
   for (let idx = 0; idx < query.length; idx++) {
     if (query.charAt(idx) === '"') {
+
       // toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       result = result.concat(query.charAt(idx));
 
       // jump onto the next line after completing each quoted text segment
       if (!inPhrase) {
+
         // in case next character is neither comma(,) nor colon(:),
         // move onto the next line
         if (idx >= query.length - 1 || !isCommaOrColon(query.charAt(idx + 1))) {
@@ -58,11 +62,13 @@ function formatLuceneQuery(query) {
     // quoted text should be printed as it is
     if (inPhrase) {
       result = result.concat(query.charAt(idx));
+
       // in case quoted text contains newline character, pointer should
       // move onto the next line but should not change the current block
       if (query.charAt(idx) === NEW_LINE) {
         result = result.concat(addNewlineTabs(tabCount, false));
       }
+
       // escaping character
       else if (
         query.charAt(idx) === "\\" &&
@@ -94,6 +100,7 @@ function formatLuceneQuery(query) {
     }
 
     if (query.charAt(idx) === "," || isOpening(query.charAt(idx))) {
+
       // add a new block when opening bracket is encountered
       tabCount += isOpening(query.charAt(idx)) ? 1 : 0;
       result = result.concat(query.charAt(idx));
@@ -103,6 +110,7 @@ function formatLuceneQuery(query) {
 
     // end the current block whenever a closing bracket is encountered
     if (isClosing(query.charAt(idx))) {
+      
       // if the cursor has already moved onto the next line,
       // remove TAB from end as cursor needs to go back to the previous block
       // otherwise, move onto the next line, get onto the previous block

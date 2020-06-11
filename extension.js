@@ -15,6 +15,7 @@ function activate(context) {
     function () {
       let editor = window.activeTextEditor;
       if (editor) {
+        
         // retrieve current document
         const document = editor.document;
         if (!document) {
@@ -54,6 +55,7 @@ function activate(context) {
                   .then((success) => {
                     console.log("Indented successfully: " + success);
                     window.showInformationMessage("Indented successfully !");
+
                     // if nothing was selected by the user,
                     // deselect everything by moving cursor to the end after replacing the text
                     if (selection.isEmpty) {
