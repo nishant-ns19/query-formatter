@@ -61,14 +61,12 @@ function removeMultipleSpaces(query, isQuoted) {
   for (let idx = 0; idx < query.length; idx++) {
     queryNew = queryNew.concat(query.charAt(idx));
     if (query.charAt(idx) === '"') {
-      
       // toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       continue;
     }
 
     if (inPhrase) {
-
       // escaping character
       if (query.charAt(idx) === "\\" && isQuoted && idx < query.length - 1) {
         queryNew = queryNew.concat(query.charAt(idx + 1));
