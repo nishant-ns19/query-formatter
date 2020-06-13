@@ -37,8 +37,6 @@ function activate(context) {
               // format query
               let result = formatLuceneQuery(textSelection);
               if (result !== textSelection) {
-                // console.log(JSON.stringify(textSelection));
-                // console.log(JSON.stringify(result));
                 // use editor object to replace the text
                 editor
                   .edit((builder) =>

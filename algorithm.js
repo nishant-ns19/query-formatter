@@ -89,7 +89,7 @@ function formatLuceneQuery(query) {
       }
       continue;
     }
-
+    // add space after colon(:)
     if (query.charAt(idx) === ":") {
       result = result.concat(": ");
       continue;
