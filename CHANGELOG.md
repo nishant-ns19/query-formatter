@@ -20,7 +20,7 @@ All notable changes to the "Lucene Query Formatter" extension will be documented
 
 ## [1.1.0]
 - Added support for removing multiple spaces from the query
-- Added support for escaping and unescaping characters in completely quoted queries
+- Added support for handling escape characters in completely quoted queries
 - Improved formatting
 
 ## [1.1.1]
