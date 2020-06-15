@@ -63,8 +63,7 @@ function formatLuceneQuery(query) {
       if (query.charAt(idx) === NEW_LINE) {
         result = result.concat(addNewlineTabs(tabCount, false));
       }
-
-      // handling escape character
+      // handling escape characters
       else if (
         query.charAt(idx) === "\\" &&
         isQuoted &&
@@ -97,6 +96,7 @@ function formatLuceneQuery(query) {
       );
       continue;
     }
+    
     // add a new block when opening bracket is encountered
     if (isOpening(query.charAt(idx))) {
       tabCount += 1;
@@ -126,7 +126,7 @@ function formatLuceneQuery(query) {
     // in any other case, just print the character
     result = result.concat(query.charAt(idx));
   }
-  return result.trim();
+  return result;
 }
 
 module.exports = {

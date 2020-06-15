@@ -67,7 +67,7 @@ function removeMultipleSpaces(query, isQuoted) {
     }
 
     if (inPhrase) {
-      // escaping character
+      // handling escape characters
       if (query.charAt(idx) === "\\" && isQuoted && idx < query.length - 1) {
         queryNew = queryNew.concat(query.charAt(idx + 1));
         idx++;
@@ -92,7 +92,7 @@ function removeMultipleSpaces(query, isQuoted) {
       idx--;
     }
   }
-  return queryNew;
+  return queryNew.trim();
 }
 
 module.exports = {
