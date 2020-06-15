@@ -40,7 +40,6 @@ function formatLuceneQuery(query) {
 
   for (let idx = 0; idx < query.length; idx++) {
     if (query.charAt(idx) === '"') {
-
       // toggle inPhrase whenever ' " ' is encountered
       inPhrase = !inPhrase;
       result = result.concat(query.charAt(idx));
@@ -65,7 +64,7 @@ function formatLuceneQuery(query) {
         result = result.concat(addNewlineTabs(tabCount, false));
       }
 
-      // escaping character
+      // unescaping character
       else if (
         query.charAt(idx) === "\\" &&
         isQuoted &&
@@ -89,15 +88,18 @@ function formatLuceneQuery(query) {
       }
       continue;
     }
-    // add space after colon(:)
-    if (query.charAt(idx) === ":") {
-      result = result.concat(": ");
+
+    // handling colon and comma
+    if (isCommaOrColon(query.charAt(idx))) {
+      result = result.concat(query.charAt(idx));
+      result = result.concat(
+        query.charAt(idx) == ":" ? " " : addNewlineTabs(tabCount)
+      );
       continue;
     }
-
-    if (query.charAt(idx) === "," || isOpening(query.charAt(idx))) {
-      // add a new block when opening bracket is encountered
-      tabCount += isOpening(query.charAt(idx)) ? 1 : 0;
+    // add a new block when opening bracket is encountered
+    if (isOpening(query.charAt(idx))) {
+      tabCount += 1;
       result = result.concat(query.charAt(idx));
       result = result.concat(addNewlineTabs(tabCount));
       continue;

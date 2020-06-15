@@ -25,3 +25,6 @@ All notable changes to the "Lucene Query Formatter" extension will be documented
 
 ## [1.1.1]
 - Bug Fixes
+
+## [1.1.2]
+- Bug Fixes
