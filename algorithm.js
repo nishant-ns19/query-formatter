@@ -64,7 +64,7 @@ function formatLuceneQuery(query) {
         result = result.concat(addNewlineTabs(tabCount, false));
       }
 
-      // unescaping character
+      // handling escape character
       else if (
         query.charAt(idx) === "\\" &&
         isQuoted &&
