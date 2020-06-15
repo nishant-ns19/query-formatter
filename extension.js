@@ -15,14 +15,12 @@ function activate(context) {
     function () {
       let editor = window.activeTextEditor;
       if (editor) {
-        
         // retrieve current document
         const document = editor.document;
         if (!document) {
           window.showInformationMessage("No document detected");
         } else {
           const selection = editor.selection;
-          
           // retrieve selected text and if nothing is selected, everything is retrieved
           const textSelection = selection.isEmpty
             ? document.getText().trim()
